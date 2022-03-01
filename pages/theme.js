@@ -1,6 +1,6 @@
 import { extendTheme, GridItem } from "@chakra-ui/react";
 
-const theme = extendTheme({
+const Theme = extendTheme({
     styles:{
         global: {
             body: {
@@ -14,4 +14,4 @@ const theme = extendTheme({
     }
 })
 
-export default theme;
+export default Theme;
