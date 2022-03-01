@@ -16,7 +16,7 @@ import theme from "./theme";
 import NextLink from "next/link";
 import Link from "next/link";
 
-export const Login = memo(() => {
+const Login = memo(() => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) =>
