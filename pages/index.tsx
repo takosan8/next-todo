@@ -15,8 +15,7 @@ import {
   GridItem,
   Image,
 } from "@chakra-ui/react";
-import theme from "./theme";
-import Login from "./login";
+import theme from "./Theme";
 import Header from "../components/Header";
 import Link from "next/link";
 
@@ -34,6 +33,7 @@ type Login = {
   func: string;
   data: string;
 };
+
 export const App = () => {
   const [text, setText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -63,7 +63,6 @@ export const App = () => {
   //todoの内容が変更される時
   const handleOnEdit = (id: number, value: string) => {
     const deepCopy: Todo[] = JSON.parse(JSON.stringify(todos));
-
     const newTodos = deepCopy.map((todo) => {
       if (todo.id === id) {
         todo.value = value;
@@ -359,9 +358,7 @@ export const App = () => {
         <Header />
         <div className="main" style={{ margin: "20px" }}>
           <Center>
-            <Stack>
-              <Login />
-            </Stack>
+            <Stack></Stack>
           </Center>
         </div>
       </ChakraProvider>

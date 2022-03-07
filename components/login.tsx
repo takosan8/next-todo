@@ -12,7 +12,6 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { ChangeEvent, memo, useState } from "react";
-import theme from "./Theme";
 import NextLink from "next/link";
 import Link from "next/link";
 
