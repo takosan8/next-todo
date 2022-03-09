@@ -130,9 +130,6 @@ export const App = () => {
     setTodos(newTodos);
   };
 
-  //日時
-  const today = new Date();
-
   if (loggedIn === true) {
     return (
       <ChakraProvider theme={theme}>
@@ -155,51 +152,7 @@ export const App = () => {
             gap={4}
           >
             <GridItem
-              rowSpan={2}
-              colSpan={1}
-              bg="white"
-              shadow="md"
-              rounded="md"
-              padding={4}
-            >
-              <Center>
-                <Stack>
-                  <p
-                    style={{
-                      color: "#90CDF4",
-                      fontWeight: "700",
-                      fontSize: "14px",
-                    }}
-                  >
-                    最終ログイン：
-                    {today.getFullYear() +
-                      "/" +
-                      (today.getMonth() + 1) +
-                      "/" +
-                      today.getDate()}
-                  </p>
-                  <Center>
-                    <Image
-                      borderRadius="full"
-                      boxSize="150px"
-                      src="/azarashi.png"
-                      alt="user01"
-                    />
-                  </Center>
-                  <Center>
-                    <Stack>
-                      <p>マーケティング課</p>
-                      <p>あざらし さん</p>
-                    </Stack>
-                  </Center>
-                  <Center>
-                    <Link href="edit">Edit Profile</Link>
-                  </Center>
-                </Stack>
-              </Center>
-            </GridItem>
-            <GridItem
-              colSpan={2}
+              colSpan={3}
               bg="white"
               shadow="md"
               rounded="md"
@@ -261,6 +214,17 @@ export const App = () => {
               rounded="md"
               padding={4}
             >
+              <Button>
+                <a href="/todos/create">TODOを追加する</a>
+              </Button>
+            </GridItem>
+            <GridItem
+              colSpan={5}
+              bg="white"
+              shadow="md"
+              rounded="md"
+              padding={4}
+            >
               <h2 style={{ marginBottom: "0.5rem" }}>
                 表示するタスクを絞り込む
               </h2>
@@ -282,7 +246,7 @@ export const App = () => {
               </select>
             </GridItem>
             <GridItem
-              colSpan={4}
+              colSpan={5}
               bg="white"
               shadow="md"
               rounded="md"
