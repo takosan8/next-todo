@@ -1,14 +1,30 @@
-import { Button, ChakraProvider, Text } from "@chakra-ui/react";
+import {
+  Stack,
+  Center,
+  Flex,
+  Heading,
+  Button,
+  ChakraProvider,
+  OrderedList,
+  ListItem,
+  Input,
+  Checkbox,
+  Grid,
+  GridItem,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import Header from "../components/Header";
 
 import theme from "./Theme";
 
-export default function edit() {
+const Create = () => {
   return (
     <ChakraProvider theme={theme}>
       <Header />
       <div className="main" style={{ margin: "10px" }}>
-        <Text fontSize="4xl">タスクを編集</Text>
+        <Text fontSize="4xl">タスクを新規作成</Text>
         <p>タスク名：</p>
         <input type="text" />
         <p>タスクの内容</p>
@@ -19,9 +35,9 @@ export default function edit() {
           <option value="重要">重要</option>
         </select>
         <Button>キャンセル</Button>
-        <Button>削除</Button>
         <Button>保存</Button>
       </div>
     </ChakraProvider>
   );
-}
+};
+export default Create;

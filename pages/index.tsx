@@ -18,6 +18,7 @@ import {
 import theme from "./Theme";
 import Header from "../components/Header";
 import Link from "next/link";
+import { RecoilRoot } from "recoil";
 
 //Todo's type
 type Todo = {
@@ -29,20 +30,11 @@ type Todo = {
 };
 type Filter = "all" | "checked" | "unchecked" | "removed" | "important";
 
-type Login = {
-  func: string;
-  data: string;
-};
-
 export const App = () => {
   const [text, setText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
 
-  const [loggedIn, setLoggedIn] = useState(true);
-  const auth = (data) => {
-    console.log(data);
-  };
   //TODOを追加した時、新たにTODOリストを再生成
   const handleOnSubmit = () => {
     if (!text) return;
@@ -130,20 +122,11 @@ export const App = () => {
     setTodos(newTodos);
   };
 
-  if (loggedIn === true) {
-    return (
+  return (
+    <RecoilRoot>
       <ChakraProvider theme={theme}>
         <Header />
         <div className="main" style={{ margin: "10px" }}>
-          {/* <Heading
-              as="h1"
-              size="4xl"
-              color="blue.400"
-              isTruncated
-              style={{ marginBottom: "20px" }}
-            >
-              ENTER YOUR NEW TODO
-            </Heading> */}
           <Grid
             h="300px"
             templateRows="repeat(2, 1fr)"
@@ -214,12 +197,12 @@ export const App = () => {
               rounded="md"
               padding={4}
             >
-              <Button>
-                <a href="/todos/create">TODOを追加する</a>
-              </Button>
+              <Link href="/create">
+                <Button>TODOを追加する</Button>
+              </Link>
             </GridItem>
             <GridItem
-              colSpan={5}
+              colSpan={1}
               bg="white"
               shadow="md"
               rounded="md"
@@ -252,6 +235,9 @@ export const App = () => {
               rounded="md"
               padding={4}
             >
+              <h2 style={{ textAlign: "center", marginBottom: "40px" }}>
+                Todo一覧
+              </h2>
               <OrderedList>
                 {filteredTodos.map((todo) => {
                   return (
@@ -287,6 +273,9 @@ export const App = () => {
                             handleOnEdit(todo.id, e.target.value)
                           }
                         />
+                        <Link href="/edit">
+                          <Button>編集</Button>
+                        </Link>
                         <Button
                           className="removeBtn"
                           colorScheme="red"
@@ -315,19 +304,8 @@ export const App = () => {
           </Grid>
         </div>
       </ChakraProvider>
-    );
-  } else {
-    return (
-      <ChakraProvider>
-        <Header />
-        <div className="main" style={{ margin: "20px" }}>
-          <Center>
-            <Stack></Stack>
-          </Center>
-        </div>
-      </ChakraProvider>
-    );
-  }
+    </RecoilRoot>
+  );
 };
 
 export default App;

@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/atoms.js"  ],
   "exclude": [
     "node_modules"
   ]
