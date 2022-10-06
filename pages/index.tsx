@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Stack,
@@ -14,16 +14,36 @@ import {
   Grid,
   GridItem,
   Image,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import theme from "./Theme";
 import Header from "../components/Header";
 import Link from "next/link";
 import { RecoilRoot } from "recoil";
+// 追加
+import { db } from "../firebaseConfig";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  setDoc,
+} from "firebase/firestore";
+import { BasicUsage } from "../components/Modal";
+import { BasicUsage2 } from "../components/Modal2";
 
 //Todo's type
 type Todo = {
   value: string;
-  readonly id: number;
+  readonly id?: number;
   checked: boolean;
   removed: boolean;
   important: boolean;
@@ -34,20 +54,67 @@ export const App = () => {
   const [text, setText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
+  const [modalData, setModalData] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const openModal = (todo) => {
+    setModalData(todo);
+    onOpen();
+    return null;
+  };
 
   //TODOを追加した時、新たにTODOリストを再生成
-  const handleOnSubmit = () => {
+  const handleOnSubmit = async () => {
     if (!text) return;
     const newTodo: Todo = {
       value: text,
-      id: new Date().getTime(),
       checked: false,
       removed: false,
       important: false,
     };
-    setTodos([newTodo, ...todos]);
-    setText("");
+
+    const ref = collection(db, "todos");
+
+    const ref2 = await addDoc(ref, {});
+
+    await setDoc(doc(db, "todos", ref2.id), {
+      ...newTodo,
+      id: ref2.id,
+    });
   };
+
+  const handleEditInModal = async (todo) => {
+    await setDoc(doc(db, "todos", todo.id), {
+      ...todo,
+      value: todo.value,
+    });
+    onClose();
+  };
+
+  const ob = { text: "hoge", title: "huga" };
+  const newOb = { ...ob, title: "value" };
+  console.log(ob, newOb);
+
+  const q = query(collection(db, "todos"));
+  useEffect(() => {
+    const unSub = onSnapshot(q, (querySnapshot) => {
+      setTodos(
+        querySnapshot.docs.map((todo) => {
+          const { id, value, important, removed, checked } = todo.data();
+          return {
+            id,
+            value,
+            important,
+            removed,
+            checked,
+          };
+        })
+      );
+    });
+    return () => unSub();
+  }, []);
+
   //textが入力された時
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -273,9 +340,21 @@ export const App = () => {
                             handleOnEdit(todo.id, e.target.value)
                           }
                         />
-                        <Link href="/edit">
-                          <Button>編集</Button>
-                        </Link>
+                        {/* <Link href="/edit"> */}
+                        {console.log(todo)}
+                        <Button onClick={() => openModal(todo)}>編集</Button>
+                        {/* {isOpen && ( */}
+                        <BasicUsage
+                          isOpen={isOpen}
+                          onClose={onClose}
+                          setData={setModalData}
+                          handleEdit={handleEditInModal}
+                        >
+                          {modalData}
+                        </BasicUsage>
+                        <BasicUsage2>{todo}</BasicUsage2>
+                        {/* )} */}
+                        {/* </Link> */}
                         <Button
                           className="removeBtn"
                           colorScheme="red"
