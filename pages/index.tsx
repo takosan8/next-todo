@@ -38,7 +38,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { BasicUsage } from "../components/Modal";
-import { BasicUsage2 } from "../components/Modal2";
+// import { BasicUsage2 } from "../components/Modal2";
 
 //Todo's type
 type Todo = {
@@ -265,7 +265,7 @@ export const App = () => {
               padding={4}
             >
               <Link href="/create">
-                <Button>TODOを追加する</Button>
+                <Button>タスクを追加する</Button>
               </Link>
             </GridItem>
             <GridItem
@@ -352,7 +352,7 @@ export const App = () => {
                         >
                           {modalData}
                         </BasicUsage>
-                        <BasicUsage2>{todo}</BasicUsage2>
+                        {/* <BasicUsage2>{todo}</BasicUsage2> */}
                         {/* )} */}
                         {/* </Link> */}
                         <Button

@@ -25,7 +25,7 @@ export const BasicUsage = ({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>タスクを編集する</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <input
